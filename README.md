@@ -352,10 +352,48 @@ Covers fake HDMI adapters, Wi-Fi issues with the lid closed, auto-start on boot,
 ## Security
 
 - **Allowlist mode** — Only paired Telegram IDs can interact with the bot. Everyone else is silently dropped
-- **Permission prompts** — Claude Code asks for approval before running potentially dangerous operations
-- **Unattended mode** — For fully autonomous operation, use `--dangerously-skip-permissions` (only in trusted, isolated environments)
+- **Permission prompts** — Claude Code asks for approval before running potentially dangerous operations. These prompts can only be approved in the local terminal, not from Telegram
 - **OAuth tokens** — Stored locally on the server, no API keys exposed
 - **Bot token** — Stored in `~/.claude/channels/telegram/.env` — keep it private and out of version control
+
+### Bypassing Permission Prompts (Dangerous)
+
+> **WARNING:** This gives Claude Code full unrestricted access to your machine. Only use this on a dedicated server where you are the sole user and the Telegram allowlist is properly configured.
+
+By default, Claude Code asks for confirmation before running shell commands, editing files, and other potentially destructive operations. When running as a Telegram bot, these prompts **block the entire session** — they can only be approved from the local terminal, not from Telegram.
+
+If your bot stops responding, it's probably stuck on a permission prompt. Check by attaching to the tmux session:
+
+```bash
+tmux attach -t claude-telegram
+```
+
+To skip all permission prompts on a dedicated server, use the `--dangerously-skip-permissions` flag:
+
+```bash
+claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions
+```
+
+In tmux for 24/7 operation:
+
+```bash
+tmux new-session -d -s claude-telegram \
+  'claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions'
+```
+
+**When to use this:**
+
+- The machine is dedicated to Claude Code (not your daily driver)
+- The Telegram allowlist is configured (only your account can message the bot)
+- The machine is on a trusted network
+- You understand that Claude can execute any command without asking
+
+**When NOT to use this:**
+
+- On your primary development machine
+- On shared servers or multi-user environments
+- If untrusted users could potentially message the bot
+- If the machine has access to production systems or sensitive credentials
 
 ## Example Prompts
 
