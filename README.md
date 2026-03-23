@@ -157,6 +157,58 @@ screen -r claude-telegram
 # Detach: Ctrl+A, then D
 ```
 
+### Auto-Start on Boot (Recommended)
+
+If the machine reboots (power outage, update, crash), the bot won't come back on its own unless you configure auto-start.
+
+**macOS (LaunchAgent):**
+
+Create `~/Library/LaunchAgents/com.claude.telegram.plist`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.claude.telegram</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/zsh</string>
+        <string>-c</string>
+        <string>export PATH=/opt/homebrew/bin:$HOME/.bun/bin:$PATH &amp;&amp; tmux kill-session -t claude-telegram 2>/dev/null; tmux new-session -d -s claude-telegram "export PATH=/opt/homebrew/bin:$HOME/.bun/bin:$PATH &amp;&amp; claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions"</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/claude-telegram.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/claude-telegram.err</string>
+</dict>
+</plist>
+```
+
+Load it:
+
+```bash
+launchctl load ~/Library/LaunchAgents/com.claude.telegram.plist
+```
+
+Verify it's loaded:
+
+```bash
+launchctl list | grep claude
+```
+
+Check logs after a reboot:
+
+```bash
+tail -f /tmp/claude-telegram.log
+```
+
+> **Note:** The LaunchAgent launches a tmux session, so even after auto-start you can attach to it with `tmux attach -t claude-telegram` to see what Claude is doing.
+
 ### With systemd (Linux)
 
 Create `/etc/systemd/system/claude-telegram.service`:
