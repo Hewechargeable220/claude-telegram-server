@@ -9,8 +9,11 @@
 set -euo pipefail
 
 # ---------- Config ----------
-MAX_RAM_KB="${MAX_RAM_KB:-4194304}"          # 4GB default
-NICE_LEVEL="${NICE_LEVEL:-10}"
+# Defaults: no nice, no RAM cap. These laptops exist to run Claude agents,
+# so the agent should NOT be deprioritized. The watchdog handles runaways.
+# Set MAX_RAM_KB or NICE_LEVEL via env to opt back in.
+MAX_RAM_KB="${MAX_RAM_KB:-0}"                # 0 = unlimited
+NICE_LEVEL="${NICE_LEVEL:-0}"                # 0 = normal priority
 BOT_MODE="${BOT_MODE:-false}"                # Set to "true" for Telegram bot mode
 TELEGRAM_PLUGIN="${TELEGRAM_PLUGIN:-plugin:telegram@claude-plugins-official}"
 TMUX_SESSION="${TMUX_SESSION:-claude-telegram}"
@@ -30,14 +33,19 @@ log() {
 
 # Build claude command
 build_cmd() {
-    local cmd="ulimit -v $MAX_RAM_KB 2>/dev/null; nice -n $NICE_LEVEL"
-    # Set PATH
-    cmd="export PATH=/opt/homebrew/bin:\$HOME/.bun/bin:/usr/local/bin:\$PATH && $cmd"
+    local prefix=""
+    if [[ "$MAX_RAM_KB" != "0" ]]; then
+        prefix="ulimit -v $MAX_RAM_KB 2>/dev/null; "
+    fi
+    if [[ "$NICE_LEVEL" != "0" ]]; then
+        prefix="${prefix}nice -n $NICE_LEVEL "
+    fi
+    local cmd="export PATH=/opt/homebrew/bin:\$HOME/.bun/bin:/usr/local/bin:\$PATH && ${prefix}"
 
     if [[ "$BOT_MODE" == "true" ]]; then
-        cmd="$cmd claude --channels $TELEGRAM_PLUGIN --dangerously-skip-permissions --permission-mode bypassPermissions"
+        cmd="${cmd}claude --channels $TELEGRAM_PLUGIN --dangerously-skip-permissions --permission-mode bypassPermissions"
     else
-        cmd="$cmd claude"
+        cmd="${cmd}claude"
     fi
     echo "$cmd"
 }
